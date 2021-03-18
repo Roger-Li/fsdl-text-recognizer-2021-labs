@@ -117,12 +117,12 @@ tensorboard==2.4.1
     # via pytorch-lightning
 toml==0.10.2
     # via -r requirements/prod.in
-torch==1.7.1
+torch==1.8.0+cu111 #1.7.1
     # via
     #   -r requirements/prod.in
     #   pytorch-lightning
     #   torchvision
-torchvision==0.8.2
+torchvision==0.9.0+cu111 #0.8.2 
     # via -r requirements/prod.in
 tqdm==4.56.0
     # via
