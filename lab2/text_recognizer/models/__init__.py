@@ -5,4 +5,6 @@ from .cnn import CNN
 
 # Hide lines above until Lab 2
 
+from .cnn2 import CNN2
+
 

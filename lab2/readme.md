@@ -83,7 +83,7 @@ It is very useful to be able to subsample the dataset for quick experiments and 
 
 This is possible by passing `--overfit_batches=0.01` (or some other fraction).
 You can also provide an int `> 1` instead for a concrete number of batches.
-https://pytorch-lightning.readthedocs.io/en/stable/debugging.html#make-model-overfit-on-subset-of-data
+https://pytorch-lightning.readthedocs.io/en/1.0.5/debugging.html#make-model-overfit-on-subset-of-data
 
 ```sh
 python3 training/run_experiment.py --model_class=CNN --data_class=EMNIST --max_epochs=50 --gpus=1 --overfit_batches=2
