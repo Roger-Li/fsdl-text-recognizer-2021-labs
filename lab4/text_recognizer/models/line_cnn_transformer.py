@@ -177,11 +177,12 @@ class LineCNNTransformer(nn.Module):
         S = self.max_output_length
         x = self.encode(x)  # (Sx, B, E)
 
-        output_tokens = (torch.ones((B, S)) * self.padding_token).type_as(x).long()  # (B, S)
+        # The output sequence is built up step by step
+        output_tokens = (torch.ones((B, S)) * self.padding_token).type_as(x).long()  # (B, S), All padding tokens
         output_tokens[:, 0] = self.start_token  # Set start token
         for Sy in range(1, S):
             y = output_tokens[:, :Sy]  # (B, Sy)
-            output = self.decode(x, y)  # (Sy, B, C)
+            output = self.decode(x, y)  # (Sy, B, C), logits
             output = torch.argmax(output, dim=-1)  # (Sy, B)
             output_tokens[:, Sy] = output[-1:]  # Set the last output token
 

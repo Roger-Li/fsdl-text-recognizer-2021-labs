@@ -55,7 +55,7 @@ class BaseLitModel(pl.LightningModule):
         return self.model(x)
 
     def training_step(self, batch, batch_idx):  # pylint: disable=unused-argument
-        x, y = batch
+        x, y = batch[0], batch[1].long()
         logits = self(x)
         loss = self.loss_fn(logits, y)
         self.log("train_loss", loss)
@@ -64,7 +64,7 @@ class BaseLitModel(pl.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):  # pylint: disable=unused-argument
-        x, y = batch
+        x, y = batch[0], batch[1].long()
         logits = self(x)
         loss = self.loss_fn(logits, y)
         self.log("val_loss", loss, prog_bar=True)
@@ -72,7 +72,7 @@ class BaseLitModel(pl.LightningModule):
         self.log("val_acc", self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
 
     def test_step(self, batch, batch_idx):  # pylint: disable=unused-argument
-        x, y = batch
+        x, y = batch[0], batch[1].long()
         logits = self(x)
         self.test_acc(logits, y)
         self.log("test_acc", self.test_acc, on_step=False, on_epoch=True)

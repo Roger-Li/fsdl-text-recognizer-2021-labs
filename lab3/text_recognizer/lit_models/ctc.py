@@ -64,7 +64,7 @@ class CTCLitModel(BaseLitModel):
 
     def training_step(self, batch, batch_idx):  # pylint: disable=unused-argument
         x, y = batch
-        logits = self(x)
+        logits = self(x)                        # This is equivalent to self.__call__(x)
         logprobs = torch.log_softmax(logits, dim=1)
         B, _C, S = logprobs.shape
 

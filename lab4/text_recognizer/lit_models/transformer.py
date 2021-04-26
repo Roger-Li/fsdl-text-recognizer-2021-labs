@@ -33,14 +33,14 @@ class TransformerLitModel(BaseLitModel):
         return self.model.predict(x)
 
     def training_step(self, batch, batch_idx):  # pylint: disable=unused-argument
-        x, y = batch
+        x, y = batch[0], batch[1].long()
         logits = self.model(x, y[:, :-1])
         loss = self.loss_fn(logits, y[:, 1:])
         self.log("train_loss", loss)
         return loss
 
     def validation_step(self, batch, batch_idx):  # pylint: disable=unused-argument
-        x, y = batch
+        x, y = batch[0], batch[1].long()
         logits = self.model(x, y[:, :-1])
         loss = self.loss_fn(logits, y[:, 1:])
         self.log("val_loss", loss, prog_bar=True)
@@ -50,7 +50,7 @@ class TransformerLitModel(BaseLitModel):
         self.log("val_cer", self.val_cer, on_step=False, on_epoch=True, prog_bar=True)
 
     def test_step(self, batch, batch_idx):  # pylint: disable=unused-argument
-        x, y = batch
+        x, y = batch[0], batch[1].long()
         pred = self.model.predict(x)
         self.test_cer(pred, y)
         self.log("test_cer", self.test_cer, on_step=False, on_epoch=True, prog_bar=True)
