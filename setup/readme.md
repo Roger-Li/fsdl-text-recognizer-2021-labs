@@ -30,7 +30,7 @@ Now, paste the following into a cell and run it:
 # FSDL Spring 2021 Setup
 !git clone https://github.com/full-stack-deep-learning/fsdl-text-recognizer-2021-labs
 %cd fsdl-text-recognizer-2021-labs
-!pip install boltons pytorch_lightning==1.1.4 wandb
+!pip3 install boltons wandb pytorch_lightning==1.1.4 pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio==0.7.2 torchtext==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
 %env PYTHONPATH=.:$PYTHONPATH
 ```
 
@@ -95,7 +95,14 @@ We add a `Makefile` for making setup dead-simple.
 
 **Note**: this step is not necessary if you are using the GCP AI Platform Notebooks instance.
 
-run `make conda-update` to create an environment called `fsdl-text-recognizer-2021`, as defined in `environment.yml`.
+Conda is an open-source package management system and environment management system that runs on Windows, macOS, and Linux.
+
+To install `conda`, follow instructions at https://conda.io/projects/conda/en/latest/user-guide/install/linux.html
+
+Note that you will likely need to close and re-open your terminal.
+Afterward, you should have ability to run the `conda` command in your terminal.
+
+Run `make conda-update` to create an environment called `fsdl-text-recognizer-2021`, as defined in `environment.yml`.
 This environment will provide us with the right Python version as well as the CUDA and CUDNN libraries.
 
 If you edit `environment.yml`, just run `make conda-update` again to get the latest changes.
