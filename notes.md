@@ -51,3 +51,46 @@ Author: Yuanzhe Li
     - Gradient checkpointing
 - Running the lab
   - The `lin_cnn_transformer` model has 4M parameters instead of 1.9M with the default settings. With my GTX 1660 TI, I can only try running it with `--batch_size=64`.
+
+### Lecture 7 - Troubleshooting DNNs
+- Start simple
+  - Choose the simplest possible model & dataset to create bug-free baseline
+- Implement & debug
+  - Recommended initializers
+    - He et al. normal (used for ReLu): $\mathcal{N}(0, \sqrt{\frac{2}{n}})$ where $n$ is the number of inputs
+    - Glorot/Xavier normal (used for tanh): $\mathcal{N}(0, \sqrt{\frac{2}{n+m}})$ where $m$ is the number of outputs
+  - Debuggers for DL code
+    - Pytorch: `ipdb`, a nicer version of `pdb`
+  - Overfit a single batch
+    - Train on a single (small compared to the size of the model) batch for many epochs/iterations to ensure the loss can approach zero
+- Model evaluation
+  - TLDR: Bias-variance decomposition
+  - Handling distribution shift
+    - Use two val sets: one from the training distribution and one from the test
+- Improve model/data
+  - Address issues in the order of under-fitting ==> over-fitting ==> distribution shift ==> Re-balancing datasets (if applicable)
+  - Error analysis (see slides for examples) 
+  - Domain adaption (pp.123 - 124)
+    - Examples of unsupervised techniques (e.g., Correlation Alignment (CORAL); Domain confusion; CycleGAN) 
+- Hyperparameter optimization (pp.128)
+  - Choosing (more sensitive) hyper-parameters (pp.130)
+  - Methods: manual; grid search; random search (coarse-to-fine, e.g., log-scaled first, and then re-sample on a finer range); Bayesian optimization
+  
+
+### Lab 5: Experiment Management
+- Data augmentation on emnist Line 2
+  - Checkout `.../data/emnist_lines2.py` line 163, `torchvision.transforms.RandomAffine`
+  - Apply the augmentation to each batch to prevent from overfitting
+  - Don't apply augmentation to test set
+- Weights & Biases for experiment management
+  - In line 96 of `run_experiment.py`, replace the default TensorBoard logger with a `wandb` logger
+  - Will be able to see gradient distribution, which makes it possible to spot gradient explosion
+  - The ability to see val prediction example at different epoch is made possible in the `validation_step` function in `lit_models/transformers.py`, where the first example of each batch was logged as an Image.
+- Hyperparameter optimization by wandb
+  - Pass in a sweep defined in `training/sweekps/emnist_lines2_line_cnn_transformer.yml` to the `wandb` command
+  - It is possible launch multiple agents and expose only one GPU to each agent by `CUDA_VISIBLE_DEVICES=0 wandb agent ...`
+
+- Following along the lab:
+  - Tried `wandb` and used `sweep` to run a suite of models using different hyper-parameters, most of which failed ([wandb link](https://wandb.ai/roger2ds/fsdl-text-recognizer-2021-labs/sweeps/vrqm73lg?workspace=user-roger2ds)) due to out-of-memory error, and none of them seemed to have been trained well enough. But still liking `wandb` and will definitely consider it in future ML projects
+
+![Lab 5: Sweep Result](lab5\lab5-sweep.png)
