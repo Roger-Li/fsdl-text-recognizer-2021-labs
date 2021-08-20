@@ -41,5 +41,5 @@ parameters:
     value: LineCNNTransformer
   loss:
     value: transformer
-  precision:
-    value: 16
+  # precision:
+  #   value: 16
