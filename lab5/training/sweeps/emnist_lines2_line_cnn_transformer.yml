@@ -1,11 +1,10 @@
 command:
   - ${env}
   - ${interpreter}
-  - "-m"
   - ${program}
   - "--wandb"
   - ${args}
-program: training.run_experiment # training/run_experiment.py
+program: training/run_experiment.py
 method: random
 metric:
   goal: minimize
@@ -27,13 +26,13 @@ parameters:
   tf_fc_dim:
     values: [256, 1024]
   tf_nhead:
-    values: [2, 4] #[4, 8]
+    values: [4, 8]
   tf_layers:
-    values: [2, 4] #[2, 4, 6]
+    values: [2, 4, 6]
   lr:
     values: [0.01, 0.001, 0.0003]
   num_workers:
-    value: 4
+    value: 20
   gpus:
     value: -1
   data_class:
@@ -42,9 +41,5 @@ parameters:
     value: LineCNNTransformer
   loss:
     value: transformer
-  batch_size:
-    value: 64
-  max_epoch:
-    value: 40
-  # precision:
-  #   value: 16
+  precision:
+    value: 16
