@@ -91,6 +91,19 @@ Author: Yuanzhe Li
   - It is possible launch multiple agents and expose only one GPU to each agent by `CUDA_VISIBLE_DEVICES=0 wandb agent ...`
 
 - Following along the lab:
-  - Tried `wandb` and used `sweep` to run a suite of models using different hyper-parameters, most of which failed ([wandb link](https://wandb.ai/roger2ds/fsdl-text-recognizer-2021-labs/sweeps/vrqm73lg?workspace=user-roger2ds)) due to out-of-memory error, and none of them seemed to have been trained well enough. But still liking `wandb` and will definitely consider it in future ML projects
+  - Tried `wandb` and used `sweep` to run a suite of models using different hyper-parameters using Google Colab ([wandb link](https://wandb.ai/roger2ds/fsdl-text-recognizer-2021-labs/sweeps/rjc32tzh?workspace=user-roger2ds))
 
-![Lab 5: Sweep Result](lab5\lab5-sweep.png)
+
+### Lab 7: Paragraph Recognition
+- Load resnet from `torchvision` and remove the last two layers (avg. pooling and linear), and unpack the arguments to feed to `torch.nn.Sequential` (from `lab7/models/resnet_transformer.py`)
+
+```Python
+resnet = torchvision.models.resnet18(pretrained=False)
+# Exclude AvgPool and Linear layers, unpack the layers as arguments
+self.resnet = torch.nn.Sequential(*(list(resnet.children())[:-2]))
+```
+
+- 2D positional encoding for images, implemented in `lab7/models/transformer_utils.py#L24`
+
+- ON `accumulate_grad_batches` ([Pytorch Lightening doc link](https://pytorch-lightning.readthedocs.io/en/latest/common/trainer.html#accumulate-grad-batches)). This is useful when it is not possible to use large batch sizes, so we simulate large batch sizes by doing forward passes through multiple small batches and accumulate the gradients, and only do backward step after several number of batches.
+
