@@ -17,4 +17,3 @@ safety
 scipy
 pillow
 wandb
-smart_open
