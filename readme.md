@@ -29,3 +29,7 @@ Sequence:
 - [Lab 8: Continuous Integration](lab8/readme.md): Add continuous linting and testing of our code.
 - [Lab 9: Deployment](lab9/readme.md): Run as a REST API locally, then in Docker, then put in production using AWS Lambda.
 - [Lab 10: Monitoring](lab10/readme.md): Set up monitoring that alerts us when the incoming data distribution changes.
+
+
+
+test
