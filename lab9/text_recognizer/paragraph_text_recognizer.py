@@ -34,7 +34,7 @@ class ParagraphTextRecognizer:
         self.lit_model = TransformerLitModel.load_from_checkpoint(
             checkpoint_path=CONFIG_AND_WEIGHTS_DIRNAME / "model.pt", args=args, model=model
         )
-        self.lit_model.eval()
+        self.lit_model.eval()  # Set the lit model to eval mode
         self.scripted_model = self.lit_model.to_torchscript(method="script", file_path=None)
 
     @torch.no_grad()

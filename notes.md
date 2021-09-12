@@ -107,3 +107,12 @@ self.resnet = torch.nn.Sequential(*(list(resnet.children())[:-2]))
 
 - ON `accumulate_grad_batches` ([Pytorch Lightening doc link](https://pytorch-lightning.readthedocs.io/en/latest/common/trainer.html#accumulate-grad-batches)). This is useful when it is not possible to use large batch sizes, so we simulate large batch sizes by doing forward passes through multiple small batches and accumulate the gradients, and only do backward step after several number of batches.
 
+
+### Lab 9 Web Deployment
+- [Torchscript](https://pytorch.org/docs/stable/jit.html)
+- Use Git Large File Storage to pull the trained model
+  - `git lfs install` and then `git lfs pull`
+- Shell commands `export`, `echo`, pipes, `curl`, `sed`
+- Pytest (check out `api_server/tests/test_app.py`)
+- Build a docker image for deployment
+

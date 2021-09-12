@@ -112,7 +112,7 @@ To make this simpler, we can build a Docker image with everything our applicatio
 First off, if you don't already have `docker` installed on your system, do so: https://docs.docker.com/get-docker/
 (You won't be able to follow this part on Google Colab, unfortunately.)
 
-Still in the `lab9` directory, run:
+Still in the `lab9` directory, run the following command to build a docker image tagged as `text-recognizer/api-server` using the docker file `api_server/Dockerfile` and using the current directory as represented by the `.` at the end.
 
 ```sh
 cp ../requirements/prod.txt requirements.txt
@@ -122,7 +122,7 @@ docker build -t text-recognizer/api-server -f api_server/Dockerfile .
 This should take a couple of minutes to complete.
 While we wait, let's look at the Dockerfile in `api_server/Dockerfile`, which defines how we're building the Docker image.
 
-When it's finished, you can run the server with
+When it's finished, you can run the server (docker ~~container~~) with
 
 ```sh
 docker run -p8000:8000 -it --rm text-recognizer/api-server
